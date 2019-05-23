@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="81133f94-b1d2-49a4-8cc4-e2e97f637f5c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/happiness_index/data/happiness_submit.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/happiness_index/data/happiness_test_abbr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/happiness_index/data/happiness_test_complete.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/happiness_index/data/happiness_train_abbr.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/happiness_index/data/happiness_train_complete.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/titanic_profiling.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/iris_tf.py" beforeDir="false" afterPath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/iris_tf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/tf_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/tf_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/titanic_fe.py" beforeDir="false" afterPath="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF/titanic_fe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/homework/iris.py" beforeDir="false" afterPath="$PROJECT_DIR$/homework/iris.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/happiness_index/happiness_index_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/happiness_index/happiness_index_v1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,7 +14,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/AIE16$tf_homework.coverage" NAME="tf_homework Coverage Results" MODIFIED="1556418045269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/homework/0420_feature_engineering&amp;TF" />
     <SUITE FILE_PATH="coverage/AIE16$naive_bayes.coverage" NAME="naive_bayes Coverage Results" MODIFIED="1558490383770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/homework/0511classification" />
-    <SUITE FILE_PATH="coverage/AIE16$happiness_index_v1.coverage" NAME="happiness_index_v1 Coverage Results" MODIFIED="1558579832940" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/happiness_index" />
+    <SUITE FILE_PATH="coverage/AIE16$happiness_index_v1.coverage" NAME="happiness_index_v1 Coverage Results" MODIFIED="1558580924880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/happiness_index" />
     <SUITE FILE_PATH="coverage/AIE16$RFE.coverage" NAME="RFE Coverage Results" MODIFIED="1556184368424" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/homework/0420_feature_engineering" />
     <SUITE FILE_PATH="coverage/AIE16$iris.coverage" NAME="iris Coverage Results" MODIFIED="1556504847898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/homework" />
     <SUITE FILE_PATH="coverage/AIE16$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1555213808375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
@@ -67,8 +57,8 @@
       <file leaf-file-name="happiness_index_v1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/happiness_index/happiness_index_v1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="542">
-              <caret line="83" column="45" lean-forward="true" selection-start-line="83" selection-start-column="45" selection-end-line="83" selection-end-column="45" />
+            <state relative-caret-position="219">
+              <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
               <folding>
                 <element signature="e#138#157#0" expanded="true" />
               </folding>
@@ -387,7 +377,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3299389" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25356415" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.51731163" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32917705" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32892057" />
@@ -776,8 +766,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/happiness_index/happiness_index_v1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="83" column="45" lean-forward="true" selection-start-line="83" selection-start-column="45" selection-end-line="83" selection-end-column="45" />
+        <state relative-caret-position="219">
+          <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
           <folding>
             <element signature="e#138#157#0" expanded="true" />
           </folding>

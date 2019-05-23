@@ -42,45 +42,50 @@ if __name__ == '__main__':
     features = (data.corr()['happiness'][abs(data.corr()['happiness']) > 0.05]).index
     features = features.values.tolist()
     features.extend(['Age', 'work_exper'])
-    features.remove('happiness')
+
+    remove_list = ['happiness', 'join_party', 'edu_yr', 'social_friend', 'work_type', 'marital_1st', 'marital_now',
+                   's_edu', 's_political', 's_hukou']
+    for a in remove_list:
+        features.remove(a)
 
     x_data = data[features]
     y_data = data['happiness']
     x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, train_size=0.7)
+    print(x_data.info())
 
-    # random forest
-    rf_est = RandomForestRegressor(n_estimators=100)
-
-    # gbdt
-    gbdt_est = GradientBoostingRegressor(learning_rate=0.01, n_estimators=100)
-    gbdt_param = {
-        'max_depth': range(2, 5)
-    }
-    gbdt_gsr = GridSearchCV(estimator=gbdt_est, param_grid=gbdt_param, scoring='neg_mean_squared_error', cv=10, n_jobs=50)
-
-    # xgboost
-    xgb_est = xgb.XGBRegressor(n_estimators=100, n_jobs=50)
-    xgb_param = {
-        'max_depth': range(2, 5),
-        'learning_rate': [0.01, 0.05, 0.1, 0.15, 0.2]
-    }
-    xgb_gsr = GridSearchCV(estimator=xgb_est, param_grid=xgb_param, scoring='neg_mean_squared_error', cv=10, n_jobs=50)
-
-    # voting
-    voting_est = VotingClassifier(estimators=[('xgb', xgb_gsr), ('gbdt', gbdt_gsr), ('rf', rf_est)],
-                                  voting='soft',
-                                  n_jobs=50)
-    voting_param = {
-        'weights': [[3, 4, 3], [2, 3, 5], [5, 3, 2]]
-    }
-    voting_gsr = GridSearchCV(estimator=voting_est, param_grid=voting_param, n_jobs=50)
-
-    voting_gsr.fit(x_train, y_train)
-
-    print(voting_gsr.score(x_train, y_train))
-    print(voting_gsr.score(x_test, y_test))
-
-    y_pred = voting_gsr.predict(x_test)
-    print(mean_squared_error(y_test, y_pred))
+    # # random forest
+    # rf_est = RandomForestRegressor(n_estimators=100)
+    #
+    # # gbdt
+    # gbdt_est = GradientBoostingRegressor(learning_rate=0.01, n_estimators=100)
+    # gbdt_param = {
+    #     'max_depth': range(2, 5)
+    # }
+    # gbdt_gsr = GridSearchCV(estimator=gbdt_est, param_grid=gbdt_param, scoring='neg_mean_squared_error', cv=10, n_jobs=50)
+    #
+    # # xgboost
+    # xgb_est = xgb.XGBRegressor(n_estimators=100, n_jobs=50)
+    # xgb_param = {
+    #     'max_depth': range(2, 5),
+    #     'learning_rate': [0.01, 0.05, 0.1, 0.15, 0.2]
+    # }
+    # xgb_gsr = GridSearchCV(estimator=xgb_est, param_grid=xgb_param, scoring='neg_mean_squared_error', cv=10, n_jobs=50)
+    #
+    # # voting
+    # voting_est = VotingClassifier(estimators=[('xgb', xgb_gsr), ('gbdt', gbdt_gsr), ('rf', rf_est)],
+    #                               voting='soft',
+    #                               n_jobs=50)
+    # voting_param = {
+    #     'weights': [[3, 4, 3], [2, 3, 5], [5, 3, 2]]
+    # }
+    # voting_gsr = GridSearchCV(estimator=voting_est, param_grid=voting_param, n_jobs=50)
+    #
+    # voting_gsr.fit(x_train, y_train)
+    #
+    # print(voting_gsr.score(x_train, y_train))
+    # print(voting_gsr.score(x_test, y_test))
+    #
+    # y_pred = voting_gsr.predict(x_test)
+    # print(mean_squared_error(y_test, y_pred))
 
 
