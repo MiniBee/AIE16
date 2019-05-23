@@ -57,8 +57,8 @@
       <file leaf-file-name="happiness_index_v1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/happiness_index/happiness_index_v1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
+            <state relative-caret-position="331">
+              <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
               <folding>
                 <element signature="e#138#157#0" expanded="true" />
               </folding>
@@ -766,8 +766,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/happiness_index/happiness_index_v1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="47" column="25" lean-forward="true" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
+        <state relative-caret-position="331">
+          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
           <folding>
             <element signature="e#138#157#0" expanded="true" />
           </folding>
