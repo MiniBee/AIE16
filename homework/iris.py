@@ -14,6 +14,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.model_selection import cross_val_score
 from sklearn.feature_selection import RFE
 import matplotlib.pyplot as plt
+import pandas_profiling as pdp
+import pandas as pd
 
 
 def load_data():
@@ -23,7 +25,9 @@ def load_data():
 if __name__ == '__main__':
     iris_data = load_data()
     x, y = iris_data.data, iris_data.target
-    # print([x for x in zip(x, y)])
+    # a = pd.DataFrame(x)
+    # pdp.ProfileReport(a).to_file('./iris.html')
+    print([x for x in zip(x, y)])
     print(x, y)
     x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7)
     model = Pipeline(steps=[

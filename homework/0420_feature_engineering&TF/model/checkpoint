@@ -1,0 +1,6 @@
+model_checkpoint_path: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-990"
+all_model_checkpoint_paths: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-950"
+all_model_checkpoint_paths: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-960"
+all_model_checkpoint_paths: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-970"
+all_model_checkpoint_paths: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-980"
+all_model_checkpoint_paths: "/Users/peihongyue/project/AIE16/homework/0420_feature_engineering&TF/model/mnist-990"

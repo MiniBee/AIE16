@@ -8,11 +8,16 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier, GradientBoostingRegressor, \
+    AdaBoostClassifier, AdaBoostRegressor, GradientBoostingClassifier, VotingClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.model_selection import cross_val_score, GridSearchCV, train_test_split
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, Normalizer, PolynomialFeatures
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+import xgboost as xgb
+
+xgb.XGBRegressor
 
 
 pd.set_option('display.width', 1800)
@@ -22,6 +27,7 @@ pd.set_option('display.max_rows', 500)
 
 
 def fill_age(data):
+
     all_df = data[['Age', 'Fare', 'Parch', 'SibSp', 'Pclass']]
     known_age = all_df[all_df['Age'].notnull()].as_matrix()
     unknown_age = all_df[all_df['Age'].isnull()].as_matrix()
@@ -29,6 +35,7 @@ def fill_age(data):
     x = known_age[:, 1:]
     y = known_age[:, 0]
 
+    model = GradientBoostingRegressor()
     rfr = RandomForestRegressor(random_state=0, n_estimators=2000, n_jobs=-1)
     rfr.fit(x, y)
     y_pred = rfr.predict(unknown_age[:, 1::])
@@ -59,6 +66,8 @@ if __name__ == '__main__':
     data_train = pd.read_csv('./data/train.csv', encoding='utf_8_sig')
     print(data_train.columns)
     print(data_train.info())
+
+    AdaBoostClassifier()
 
     # plt.subplot2grid((2, 3), (1, 0), colspan=2)
     # data_train.Age.plot(kind='kde', grid=True, style='-k', title=u'age dis')
