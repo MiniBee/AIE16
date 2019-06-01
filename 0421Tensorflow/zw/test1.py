@@ -12,9 +12,11 @@ import os
 import jieba
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, VotingClassifier, ExtraTreesClassifier, AdaBoostClassifier
 import xgboost as xgb
+from sklearn.preprocessing import PolynomialFeatures
 
 
 def strip_data(sentence, stopwords_file, cut_all=False):
@@ -82,6 +84,9 @@ if __name__ == '__main__':
     tfidfTransformer = tfidfVectorizer_(res_words)
     tokens_train = tfidfTransformer.transform(res_words)
     tokens_test = tfidfTransformer.transform(test_words)
+    poly = PolynomialFeatures(degree=3)
+    tokens_train = poly.fit_transform(tokens_train)
+    tokens_test = poly.fit_transform(tokens_test)
     # tokens_train = countVectorizer.transform(res_words)
     # tokens_test = countVectorizer.transform(test_words)
     ed = time.perf_counter()
@@ -91,7 +96,7 @@ if __name__ == '__main__':
     st = time.perf_counter()
     lda = lda(tokens_train)
     # tokens_lda = lda.transform(tokens_train)
-    # tokens_lda_test = lda.transform(tokens_test)
+    # tokens_lda_test = lda.transform(tokens_test)`
     tokens_lda = tokens_train
     tokens_lda_test = tokens_test
     ed = time.perf_counter()
@@ -117,24 +122,24 @@ if __name__ == '__main__':
     # ed = time.perf_counter()
     # print('gbdt ', ed - st)
 
-    print('random forest ...')
-    st = time.perf_counter()
-    rf = RandomForestClassifier(max_features='sqrt')
-    rf_param = {'n_estimators': [200, 300, 400]}
-    rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=5, scoring='accuracy')
-    rf_grid.fit(x_train, y_train)
-    print(rf_grid.best_params_)
-    rf_ = rf_grid.best_estimator_
-    print(rf_.get_params())
-    print(rf_.score(x_train, y_train))
-    print(rf_.score(x_test, y_test))
-    ed = time.perf_counter()
-    print('random forest ', ed - st)
+    # print('random forest ...')
+    # st = time.perf_counter()
+    # rf = RandomForestClassifier(max_features='sqrt')
+    # rf_param = {'n_estimators': [200, 300, 400]}
+    # rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=5, scoring='accuracy')
+    # rf_grid.fit(x_train, y_train)
+    # print(rf_grid.best_params_)
+    # rf_ = rf_grid.best_estimator_
+    # print(rf_.get_params())
+    # print(rf_.score(x_train, y_train))
+    # print(rf_.score(x_test, y_test))
+    # ed = time.perf_counter()
+    # print('random forest ', ed - st)
 
     print('xgboost ...')
     st = time.perf_counter()
     xgb = xgb.XGBClassifier(learning_rate=1)
-    xgb_param = {'n_estimators': [500, 600, 700]}
+    xgb_param = {'n_estimators': [600, 700, 800]}
     xgb_grid = GridSearchCV(estimator=xgb, param_grid=xgb_param, cv=5, scoring='accuracy')
     xgb_grid.fit(x_train, y_train)
     print(xgb_grid.best_params_)
