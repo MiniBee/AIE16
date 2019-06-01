@@ -10,10 +10,10 @@
 import time
 import os
 import jieba
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, VotingClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, VotingClassifier, ExtraTreesClassifier, AdaBoostClassifier
 import xgboost as xgb
 
 
@@ -34,7 +34,7 @@ def strip_word(seg_list, stopwords_file):
     return words
 
 
-def load_data(path='./data/2000/'):
+def load_data(path='./data/6000/'):
     res_words = []
     file_names = []
     file_list = os.listdir(path)
@@ -51,18 +51,18 @@ def load_data(path='./data/2000/'):
 
 
 def countVectorizer_(words):
-    countVectorizer = CountVectorizer(token_pattern=r"(?u)\b\w+\b", max_df=0.95, min_df=2, max_features=20000)
+    countVectorizer = CountVectorizer(token_pattern=r"(?u)\b\w+\b", min_df=1, max_features=20000)
     countVectorizer.fit(words)
     return countVectorizer
 
-def tfidfTransformer_(words):
-    tfidfTransformer = TfidfTransformer()
+def tfidfVectorizer_(words):
+    tfidfTransformer = TfidfVectorizer(token_pattern=r"(?u)\b\w+\b", min_df=1, max_features=20000)
     tfidfTransformer.fit(words)
     return tfidfTransformer
 
 
 def lda(tokens_train):
-    lda = LatentDirichletAllocation(n_components=300, max_iter=5, learning_method='online', learning_offset=50, random_state=0)
+    lda = LatentDirichletAllocation(n_components=100, max_iter=5, learning_method='online', learning_offset=50, random_state=0)
     lda.fit(tokens_train)
     return lda
 
@@ -72,34 +72,42 @@ if __name__ == '__main__':
     st = time.perf_counter()
     jieba.load_userdict('./data/ud.dict')
     res_words, file_names = load_data()
+    test_words, test_file = load_data('./data/10000/')
     ed = time.perf_counter()
     print('load data %s', ed - st)
 
     print('count vec ...')
     st = time.perf_counter()
-    countVectorizer = countVectorizer_(res_words)
-    # tfidfTransformer = tfidfTransformer_(res_words)
-    # tokens_train = tfidfTransformer.transform(res_words)
-    tokens_train = countVectorizer.transform(res_words)
+    # countVectorizer = countVectorizer_(res_words)
+    tfidfTransformer = tfidfVectorizer_(res_words)
+    tokens_train = tfidfTransformer.transform(res_words)
+    tokens_test = tfidfTransformer.transform(test_words)
+    # tokens_train = countVectorizer.transform(res_words)
+    # tokens_test = countVectorizer.transform(test_words)
     ed = time.perf_counter()
     print('count vec', ed - st)
 
     print('lda ...')
     st = time.perf_counter()
     lda = lda(tokens_train)
-    tokens_lda = lda.transform(tokens_train)
+    # tokens_lda = lda.transform(tokens_train)
+    # tokens_lda_test = lda.transform(tokens_test)
+    tokens_lda = tokens_train
+    tokens_lda_test = tokens_test
     ed = time.perf_counter()
     print('lda ', ed - st)
 
     res_label = [1 if x.split('.')[0] == 'pos' else 0 for x in file_names]
+    test_label = [1 if x.split('.')[0] == 'pos' else 0 for x in test_file]
 
-    x_train, x_test, y_train, y_test = train_test_split(tokens_lda, res_label, test_size=0.3, random_state=11)
-
+    # x_train, x_test, y_train, y_test = train_test_split(tokens_lda, res_label, test_size=0.3, random_state=11)
+    x_train, y_train = tokens_lda, res_label
+    x_test, y_test = tokens_lda_test, test_label
     # print('gbdt ...')
     # st = time.perf_counter()
-    # gbdt = GradientBoostingClassifier(learning_rate=0.05)
+    # gbdt = GradientBoostingClassifier(learning_rate=0.5)
     # gbdt_param = {'max_depth': [5, 6, 7, 8], 'n_estimators': [100, 200, 300, 400]}
-    # gbdt_grid = GridSearchCV(estimator=gbdt, param_grid=gbdt_param, cv=10)
+    # gbdt_grid = GridSearchCV(estimator=gbdt, param_grid=gbdt_param, cv=10, scoring='accuracy')
     # gbdt_grid.fit(x_train, y_train)
     # print(gbdt_grid.best_params_)
     # gbdt_ = gbdt_grid.best_estimator_
@@ -111,9 +119,9 @@ if __name__ == '__main__':
 
     print('random forest ...')
     st = time.perf_counter()
-    rf = RandomForestClassifier()
-    rf_param = {'n_estimators': [100, 200, 300, 400, 500]}
-    rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=5)
+    rf = RandomForestClassifier(max_features='sqrt')
+    rf_param = {'n_estimators': [200, 300, 400]}
+    rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=5, scoring='accuracy')
     rf_grid.fit(x_train, y_train)
     print(rf_grid.best_params_)
     rf_ = rf_grid.best_estimator_
@@ -125,9 +133,9 @@ if __name__ == '__main__':
 
     print('xgboost ...')
     st = time.perf_counter()
-    xgb = xgb.XGBClassifier(learning_rate=0.05)
-    xgb_param = {'n_estimators': [100, 200, 300, 400, 500]}
-    xgb_grid = GridSearchCV(estimator=xgb, param_grid=xgb_param, cv=5)
+    xgb = xgb.XGBClassifier(learning_rate=1)
+    xgb_param = {'n_estimators': [500, 600, 700]}
+    xgb_grid = GridSearchCV(estimator=xgb, param_grid=xgb_param, cv=5, scoring='accuracy')
     xgb_grid.fit(x_train, y_train)
     print(xgb_grid.best_params_)
     xgb_ = xgb_grid.best_estimator_
@@ -137,14 +145,44 @@ if __name__ == '__main__':
     ed = time.perf_counter()
     print('xgboost ', ed - st)
 
-    print('voting ...')
+    # ExtraTreesClassifier
+    print('et ...')
     st = time.perf_counter()
-    vc = VotingClassifier(estimators=[('xgboost', xgb_), ('rf', rf_)], weights=[5, 5], voting = 'soft')
-    vc.fit(x_train, y_train)
-    y_pred = vc.predict(x_test)
-    print(vc.score(x_train, y_train))
-    print(vc.score(x_test, y_test))
+    et = ExtraTreesClassifier()
+    et_param = {'n_estimators': [300, 400, 500, 600]}
+    et_grid = GridSearchCV(estimator=et, param_grid=et_param, cv=5, scoring='accuracy')
+    et_grid.fit(x_train, y_train)
+    print(et_grid.best_params_)
+    et_ = et_grid.best_estimator_
+    print(et_.get_params())
+    print(et_.score(x_train, y_train))
+    print(et_.score(x_test, y_test))
     ed = time.perf_counter()
-    print('voting ', ed - st)
+    print('et ', ed - st)
+
+    # AdaBoostClassifier
+    print('adb ...')
+    st = time.perf_counter()
+    adb = AdaBoostClassifier(learning_rate=0.1)
+    adb_param = {'n_estimators': [50, 100, 150, 200]}
+    adb_grid = GridSearchCV(estimator=adb, param_grid=adb_param, cv=5, scoring='accuracy')
+    adb_grid.fit(x_train, y_train)
+    print(adb_grid.best_params_)
+    adb_ = adb_grid.best_estimator_
+    print(adb_.get_params())
+    print(adb_.score(x_train, y_train))
+    print(adb_.score(x_test, y_test))
+    ed = time.perf_counter()
+    print('adb ', ed - st)
+
+    # print('voting ...')
+    # st = time.perf_counter()
+    # vc = VotingClassifier(estimators=[('xgboost', xgb_), ('rf', rf_)], weights=[4, 6], voting = 'soft')
+    # vc.fit(x_train, y_train)
+    # y_pred = vc.predict(x_test)
+    # print(vc.score(x_train, y_train))
+    # print(vc.score(x_test, y_test))
+    # ed = time.perf_counter()
+    # print('voting ', ed - st)
 
 
