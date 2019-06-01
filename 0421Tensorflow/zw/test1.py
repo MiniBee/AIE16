@@ -77,9 +77,10 @@ if __name__ == '__main__':
 
     print('count vec ...')
     st = time.perf_counter()
-    # countVectorizer = countVectorizer_(res_words)
-    tfidfTransformer = tfidfTransformer_(res_words)
-    tokens_train = tfidfTransformer.transform(res_words)
+    countVectorizer = countVectorizer_(res_words)
+    # tfidfTransformer = tfidfTransformer_(res_words)
+    # tokens_train = tfidfTransformer.transform(res_words)
+    tokens_train = countVectorizer.transform(res_words)
     ed = time.perf_counter()
     print('count vec', ed - st)
 
