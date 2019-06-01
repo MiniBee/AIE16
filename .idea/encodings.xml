@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.0.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.1.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.12.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.13.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.2.txt" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.3.txt" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.4.txt" charset="GB18030" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.5.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.7.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/2000/neg.8.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/4000/neg.0.txt" charset="ISO-8859-1" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/4000/neg.1.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/0421Tensorflow/zw/data/4000/pos.1223.txt" charset="ISO-8859-1" />
+  </component>
+</project>
