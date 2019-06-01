@@ -51,7 +51,7 @@ def load_data(path='./data/2000/'):
 
 
 def countVectorizer_(words):
-    countVectorizer = CountVectorizer(max_df=0.95, min_df=2, max_features=20000)
+    countVectorizer = CountVectorizer(token_pattern=r"(?u)\b\w+\b", max_df=0.95, min_df=2, max_features=20000)
     countVectorizer.fit(words)
     return countVectorizer
 
@@ -95,25 +95,25 @@ if __name__ == '__main__':
 
     x_train, x_test, y_train, y_test = train_test_split(tokens_lda, res_label, test_size=0.3, random_state=11)
 
-    print('gbdt ...')
-    st = time.perf_counter()
-    gbdt = GradientBoostingClassifier(learning_rate=0.05)
-    gbdt_param = {'max_depth': [5, 6, 7, 8], 'n_estimators': [100, 200, 300, 400]}
-    gbdt_grid = GridSearchCV(estimator=gbdt, param_grid=gbdt_param, cv=10)
-    gbdt_grid.fit(x_train, y_train)
-    print(gbdt_grid.best_params_)
-    gbdt_ = gbdt_grid.best_estimator_
-    y_pred = gbdt_.predict(x_test)
-    print(gbdt_.score(x_train, y_train))
-    print(gbdt_.score(x_test, y_test))
-    ed = time.perf_counter()
-    print('gbdt ', ed - st)
+    # print('gbdt ...')
+    # st = time.perf_counter()
+    # gbdt = GradientBoostingClassifier(learning_rate=0.05)
+    # gbdt_param = {'max_depth': [5, 6, 7, 8], 'n_estimators': [100, 200, 300, 400]}
+    # gbdt_grid = GridSearchCV(estimator=gbdt, param_grid=gbdt_param, cv=10)
+    # gbdt_grid.fit(x_train, y_train)
+    # print(gbdt_grid.best_params_)
+    # gbdt_ = gbdt_grid.best_estimator_
+    # y_pred = gbdt_.predict(x_test)
+    # print(gbdt_.score(x_train, y_train))
+    # print(gbdt_.score(x_test, y_test))
+    # ed = time.perf_counter()
+    # print('gbdt ', ed - st)
 
     print('random forest ...')
     st = time.perf_counter()
     rf = RandomForestClassifier()
     rf_param = {'n_estimators': [100, 200, 300, 400, 500]}
-    rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=10)
+    rf_grid = GridSearchCV(estimator=rf, param_grid=rf_param, cv=5)
     rf_grid.fit(x_train, y_train)
     print(rf_grid.best_params_)
     rf_ = rf_grid.best_estimator_
@@ -127,7 +127,7 @@ if __name__ == '__main__':
     st = time.perf_counter()
     xgb = xgb.XGBClassifier(learning_rate=0.05)
     xgb_param = {'n_estimators': [100, 200, 300, 400, 500]}
-    xgb_grid = GridSearchCV(estimator=xgb, param_grid=xgb_param, cv=10)
+    xgb_grid = GridSearchCV(estimator=xgb, param_grid=xgb_param, cv=5)
     xgb_grid.fit(x_train, y_train)
     print(xgb_grid.best_params_)
     xgb_ = xgb_grid.best_estimator_
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     print('voting ...')
     st = time.perf_counter()
-    vc = VotingClassifier(estimators={'gbdt': gbdt_, 'rf': rf_}, weights=[5, 5])
+    vc = VotingClassifier(estimators=[('xgboost', xgb_), ('rf', rf_)], weights=[5, 5], voting = 'soft')
     vc.fit(x_train, y_train)
     y_pred = vc.predict(x_test)
     print(vc.score(x_train, y_train))
